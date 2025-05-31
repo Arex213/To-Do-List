@@ -23,7 +23,7 @@ def save_tasks():
     with open("tasks.txt", "w") as file:
         tasks = listbox.get(0, tk.END)
         for task in tasks:
-            file.write("-" + task + "\n")
+            file.write(task + "\n")
 
 def add_task():
     task = entry.get()
@@ -41,6 +41,10 @@ def remove_task():
             listbox.delete(i)
         save_tasks()
 
+def save_and_quit():
+    save_tasks()
+    root.quit()
+
 # Create buttons
 add_button = tk.Button(root, text="Add Task", command=add_task, font=("Arial", 18))
 add_button.pack(pady=10)
@@ -48,7 +52,8 @@ add_button.pack(pady=10)
 remove_button = tk.Button(root, text="Remove Task", command=remove_task, font=("Arial", 18))
 remove_button.pack(pady=10)
 
-save_buttton = tk.Button(root, text="Save Tasks", command=save_tasks, font=("Arial", 18))
+
+save_buttton = tk.Button(root, text="Save Tasks and Quit", command=save_and_quit, font=("Arial", 18))
 save_buttton.pack(pady=10)
 
 # Create listbox to display tasks
@@ -62,6 +67,6 @@ root.protocol("WM_DELETE_WINDOW", lambda: on_close())
 def on_close():
     if messagebox.askokcancel("Quit", "Do you want to save your tasks?"):
         save_tasks()
-    root.destroy()
+    root.quit()
 
 root.mainloop()
