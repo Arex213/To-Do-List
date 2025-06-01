@@ -1,6 +1,8 @@
 import tkinter as tk
 import tkinter.messagebox as messagebox
 
+# To-Do List Application using Tkinter
+
 root = tk.Tk()
 root.title("To-Do List")
 root.geometry("800x600")
@@ -9,26 +11,38 @@ root.geometry("800x600")
 entry = tk.Entry(root, font=("Arial", 24))
 entry.pack(pady=20)
 
+color_index = 0
+colors = ["red", "green", "blue", "black"]
+
 # Load tasks from file
 def load_tasks():
     try:
         with open("tasks.txt", "r") as file:
-            for task in file:
-                listbox.insert(tk.END, task.strip())
+            for line in file:
+                parts = line.strip().split("||")
+                if len(parts) == 2:
+                    task, color = parts
+                    listbox.insert(tk.END, task)
+                    listbox.itemconfig(tk.END, fg=color)
+                else:
+                    task = parts[0]
+                    listbox.insert(tk.END, task)
     except FileNotFoundError:
         pass  # It's okay if the file doesn't exist yet
 
 # Function to save tasks to the text file
 def save_tasks():
     with open("tasks.txt", "w") as file:
-        tasks = listbox.get(0, tk.END)
-        for task in tasks:
-            file.write(task + "\n")
+        for i in range(listbox.size()):
+            task = listbox.get(i)
+            color = listbox.itemcget(i, "fg")
+            file.write(f"{task}||{color}\n")
 
 def add_task():
     task = entry.get()
     if task:
         listbox.insert(tk.END, task)
+        listbox.itemconfig(tk.END, fg=colors[color_index])
         entry.delete(0, tk.END)
         save_tasks()
     else:
@@ -45,6 +59,11 @@ def save_and_quit():
     save_tasks()
     root.quit()
 
+def change_color():
+    global color_index
+    color_index = (color_index + 1) % len(colors)
+    entry.configure(fg=colors[color_index])
+
 # Create buttons
 add_button = tk.Button(root, text="Add Task", command=add_task, font=("Arial", 18))
 add_button.pack(pady=10)
@@ -52,6 +71,8 @@ add_button.pack(pady=10)
 remove_button = tk.Button(root, text="Remove Task", command=remove_task, font=("Arial", 18))
 remove_button.pack(pady=10)
 
+color_button = tk.Button(root, text="Change Color", command=change_color, font=("Arial", 18))
+color_button.pack(pady=10)
 
 save_buttton = tk.Button(root, text="Save Tasks and Quit", command=save_and_quit, font=("Arial", 18))
 save_buttton.pack(pady=10)
