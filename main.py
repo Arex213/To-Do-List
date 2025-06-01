@@ -1,20 +1,24 @@
 import tkinter as tk
 import tkinter.messagebox as messagebox
 
-# To-Do List Application using Tkinter
-
+# Set up the main window
 root = tk.Tk()
 root.title("To-Do List")
 root.geometry("800x600")
+
+# Title label
+title_label = tk.Label(root, text="To-Do List", font=("Arial", 32))
+title_label.pack(pady=20)
 
 # Create entry field
 entry = tk.Entry(root, font=("Arial", 24))
 entry.pack(pady=20)
 
+# Initialize color index and colors
 color_index = 0
-colors = ["red", "green", "blue", "black"]
+colors = ["black","red", "green", "blue"]
 
-# Load tasks from file
+
 def load_tasks():
     try:
         with open("tasks.txt", "r") as file:
@@ -28,9 +32,8 @@ def load_tasks():
                     task = parts[0]
                     listbox.insert(tk.END, task)
     except FileNotFoundError:
-        pass  # It's okay if the file doesn't exist yet
+        pass  
 
-# Function to save tasks to the text file
 def save_tasks():
     with open("tasks.txt", "w") as file:
         for i in range(listbox.size()):
