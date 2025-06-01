@@ -27,8 +27,8 @@ No external libraries required — only built-in modules are used.
 
 ### 2. How to Run
 
-1. Save the script to a file, e.g., `todo_app.py`
+1. Save the script to a file, e.g., `main.py`
 2. Open terminal or command prompt and run:
 
 ```bash
-python todo_app.py
+python main.py
