@@ -27,8 +27,9 @@ No external libraries required — only built-in modules are used.
 
 ### 2. How to Run
 
-1. Save the script to a file, e.g., `main.py`
-2. Open terminal or command prompt and run:
+1. Make sure `main.py` and `tasks.txt` (if it exists) are in the **same folder**.
+2. Open a terminal or command prompt in that folder.
+3. Run the app using:
 
 ```bash
 python main.py
